@@ -3,6 +3,7 @@ src_file = '1.txt'
 out_file = 'out.xml'
 words = Array[]
 
+# todo to check if file opened successfully
 xml = File.open(out_file, 'w:windows-1251')
 xml.puts('<?xml version="1.0" encoding="UTF-8"?>')
 xml.puts('<dataroot generated="' + Time.now.to_s + '">')
