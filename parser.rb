@@ -1,36 +1,18 @@
-# frozen_string_literal: true
-
-# constants
-READ = 'r'
-READ.freeze
-WRITE = 'w'
-WRITE.freeze
-
 # variables
-src_dir = 'sources' # subdir
-up_dir = '..' # parent dir
-current_dir = '.'
 src_file = '1.txt'
 out_file = 'out.xml'
+words = Array[]
 
-Dir.chdir up_dir
-File.open(out_file, WRITE)
-Dir.chdir up_dir
-
-# taking files from source subdir one by one
-# Dir.chdir src_dir
-puts Dir.children(current_dir)
-
-# files[] = Dir.methods
-# puts files[]
-
-File.open(src_file, READ) do |file|
+xml = File.open(out_file, 'w:windows-1251')
+xml.puts('<?xml version="1.0" encoding="UTF-8"?>')
+xml.puts('<dataroot generated="' + Time.now.to_s + '">')
+File.open(src_file, 'r:windows-1251') do |file|
   for line in file.readlines
-    puts line
+    xml.puts('<paragraph>')
+    words = line.split
+    words.each { |word| xml.write('<word>'+word+'</word>'+"\n") }
+    xml.puts('</paragraph>')
   end
 end
-Dir.chdir up_dir
-File.close(out_file)
-
-# for every file do parsing and create xml
-# finished xml-files to put in the upload folder
+xml.puts('</dataroot>')
+xml.close()
